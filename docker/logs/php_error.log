@@ -1,0 +1,4 @@
+[16-Jul-2019 07:55:59 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to undefined function dd() in /opt/www/public/desktop/index.php:6
+Stack trace:
+#0 {main}
+  thrown in /opt/www/public/desktop/index.php on line 6
