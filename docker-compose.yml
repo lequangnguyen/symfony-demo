@@ -7,39 +7,65 @@ networks:
   dev_network:
     driver: bridge
 services:
-### Nginx proxy
-    nginx-proxy:
-        image: jwilder/nginx-proxy
-        ports:
-          - "80:80"
-        volumes:
-          - /var/run/docker.sock:/tmp/docker.sock:ro
-        networks:
-          - dev_network
-### CMS web deployment
-    all_php:
-        build: ./docker/php
-        volumes:
-          #- ./docker/php/conf:/usr/local/etc/php-fpm.d
-          - ./:/opt/www/
-        expose:
-          - 9000-9002
-        networks:
-          - dev_network
-        #command: ["chown", "www-data:www-data", "/sock"]
-    all_nginx:
-        build: ./docker/nginx
-        volumes:
-          - ./docker/nginx/conf:/etc/nginx/conf.d
-          - ./:/opt/www/
-#        volumes_from:
-#          - cms_php
-        environment:
-          - VIRTUAL_HOST=symfony.test
-        expose:
-          - 80
-        links:
-          - all_php
-        networks:
-          - dev_network
+  ### Nginx proxy
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - dev_network
+  ### CMS web deployment
+  all_php:
+    build: ./docker/php
+    volumes:
+      #- ./docker/php/conf:/usr/local/etc/php-fpm.d
+      - ./:/opt/www/
+    expose:
+      - 9000-9002
+    networks:
+      - dev_network
+    #command: ["chown", "www-data:www-data", "/sock"]
+  all_nginx:
+    build: ./docker/nginx
+    volumes:
+      - ./docker/nginx/conf:/etc/nginx/conf.d
+      - ./:/opt/www/
+    #        volumes_from:
+    #          - cms_php
+    environment:
+      - VIRTUAL_HOST=symfony.test
+    expose:
+      - 80
+    links:
+      - all_php
+    networks:
+      - dev_network
+  mysql:
+    build:
+      context: ./docker/mysql
+      args:
+        - MYSQL_VERSION=5.7
+    environment:
+      - MYSQL_DATABASE=dev_db_1
+      - MYSQL_USER=nguyenlq
+      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=123456
+    #      - TZ=${WORKSPACE_TIMEZONE}
+    volumes:
+      - ./docker/database:/var/lib/mysql
+      - ./docker/mysql/docker-entrypoint-initdb.d
+    ports:
+      - "3306"
+    networks:
+      - dev_network
+  phpmyadmin:
+    build: ./docker/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    ports:
+      - "80"
+    networks:
+      - dev_network
 ### CMS web deployment

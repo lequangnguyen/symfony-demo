@@ -2,3 +2,12 @@
 Stack trace:
 #0 {main}
   thrown in /opt/www/public/desktop/index.php on line 6
+[19-Jul-2019 14:40:30 Asia/Kolkata] PHP Fatal error:  A void function must not return a value in /opt/www/src/Entity/Users.php on line 91
+[19-Jul-2019 14:40:30 Asia/Kolkata] PHP Stack trace:
+[19-Jul-2019 14:40:30 Asia/Kolkata] PHP   1. {main}() /opt/www/public/index.php:0
+[19-Jul-2019 14:40:30 Asia/Kolkata] PHP   2. App\Kernel->handle() /opt/www/public/index.php:25
+[19-Jul-2019 14:40:30 Asia/Kolkata] PHP   3. Symfony\Component\HttpKernel\HttpKernel->handle() /opt/www/vendor/symfony/http-kernel/Kernel.php:198
+[19-Jul-2019 14:40:30 Asia/Kolkata] PHP   4. Symfony\Component\HttpKernel\HttpKernel->handleRaw() /opt/www/vendor/symfony/http-kernel/HttpKernel.php:68
+[19-Jul-2019 14:40:30 Asia/Kolkata] PHP   5. App\Controller\DemoController->createUser() /opt/www/vendor/symfony/http-kernel/HttpKernel.php:151
+[19-Jul-2019 14:40:30 Asia/Kolkata] PHP   6. spl_autoload_call() /opt/www/src/Controller/DemoController.php:37
+[19-Jul-2019 14:40:30 Asia/Kolkata] PHP   7. Symfony\Component\Debug\DebugClassLoader->loadClass() /opt/www/src/Controller/DemoController.php:37
